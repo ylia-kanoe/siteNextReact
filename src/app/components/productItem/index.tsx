@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { productData } from "@/app/services/productApi/types";
 import { Button } from "../button";
+import { RaitingStars } from "../raitingStars";
 
 export function ProductItem(props: productData) {
 
@@ -17,11 +18,12 @@ export function ProductItem(props: productData) {
 
                 <p className="text-lg font-semibold self-start">{props.brand}</p>
                 <p className="text-base self-start">{props.title}</p>
-                <p className="mt-6 text-base text-gray-600 self-start">{props.rating}
-                    <span className="text-xs text-zinc-500">{props.reviews.length}</span>
-                </p>
-                <p className="mt-6 text-base font-semibold self-start">{props.discountPercentage}
-                    <s className='text-sm text-zinc-500'>{props.price}</s>
+                <div className="flex mt-6 text-base text-gray-600 self-start">
+                    <RaitingStars raiting={props.rating}/>
+                    <div className="self-end text-zinc-500 ml-[5px]">{props.reviews.length}</div>
+                </div>
+                <p className="mt-6 text-lg font-semibold self-start">{props.discountPercentage} $
+                    <s className='text-sm text-zinc-500 ml-[10px]'>{props.price}</s>
                 </p>
                 <Button title="В корзину" />
 
