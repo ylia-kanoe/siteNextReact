@@ -1,9 +1,9 @@
 import { productsData } from "./types";
 
 class Instance {
-    getProductList = async (num: number) : Promise<productsData>  => {
+    getProductList = async (limit: number, skip: number) : Promise<productsData>  => {
         return await fetch(
-            "https://dummyjson.com/products?limit=" + num
+            "https://dummyjson.com/products?limit=" + limit + "&skip=" + skip
         ).then((response) => response.json())
     }
     getProductListFilter = async (filterName: string) : Promise<productsData>  => {
