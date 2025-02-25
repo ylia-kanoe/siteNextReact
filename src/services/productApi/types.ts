@@ -21,5 +21,10 @@ export type productData = {
 }
 
 export type productsData = {
-    products: productData[]
+    products: productData[],
+    limit: number
+}
+
+export type setProductsCategory = {
+    category: string
 }
