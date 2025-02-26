@@ -4,18 +4,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Filter } from "../../components/filter";
 import { ProductList } from "../../components/productList";
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { getApiData, getApiDataCategory, getApiDataMore } from '@/services/productApi';
-import { setProducts, setProductsMore } from '@/lib/features/product/productSlice';
+import { getApiData, getApiDataCategory, getApiProductsSort } from '@/services/productApi';
+import { setProducts } from '@/lib/features/product/productSlice';
 import { Pagination } from '@/components/pagination';
 import { Button } from '@/components/button';
 
 export function Product() {
     const [limitProduct, setLimitProduct] = useState(24)
     const [skipProduct, setSkipProduct] = useState(0)
-    /* const [filterCat, setFilterCat] = useState(false)*/
-
-    /*const data = await ProductApi.getProductList(24, 0)
-    const products = data.products*/
+    const [filterCat, setFilterCat] = useState(false)
+    const [filterSort, setFilterSort] = useState('')
+    const [filterOrder, setFilterOrder] = useState('')
 
     const initialized = useRef(false)
     if (!initialized.current) {
@@ -24,13 +23,11 @@ export function Product() {
 
     const products = useAppSelector(state => state.products.products)
 
-    /* const productsCategory = useAppSelector(state => state.products.categoryProducts)*/
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        getApiData(limitProduct, skipProduct).then(data => dispatch(setProducts(data.products)));
-        getApiDataMore().then(data => dispatch(setProductsMore(data.products)));
-    }, [limitProduct, skipProduct]);
+        getApiData(limitProduct, skipProduct, filterSort, filterOrder).then(data => dispatch(setProducts(data.products)));
+    }, [limitProduct, skipProduct, dispatch]);
 
     function nextPage(skip: number) {
         setSkipProduct(skip)
@@ -41,23 +38,30 @@ export function Product() {
     }
 
     function filterCategory(category: string) {
-        getApiDataCategory(24, 0, category).then(data => { dispatch(setProducts(data.products)) });
-        /*setFilterCat(true)*/
+        getApiDataCategory(category).then(data => { dispatch(setProducts(data.products)) });
+        if (category === '') {
+            setFilterCat(false)
+        } else {
+            setFilterCat(true)
+        }
     }
 
-    /* function followLink(index: number) {
-         console.log(index)
-     }*/
+    function sortProduct(nameSort: string, order: string, category: string){
+        getApiProductsSort(nameSort, order, category).then(data => { dispatch(setProducts(data.products)) })
+        setFilterSort(nameSort)
+        setFilterOrder(order)
+    }
 
     return (
         <>
-            <Filter filterCategory={filterCategory} />
+            <Filter filterCategory={filterCategory} limitProduct={limitProduct} skipProduct={skipProduct} sortProduct={sortProduct}/>
             <div className='flex flex-col items-center'>
                 <ProductList productsData={products} />
-
-                <Button onclick={() => setLimitProduct(limitProduct + 24)} title='Показать еще' />
-                <Pagination limitProd={limitProduct} skipProd={skipProduct} nextPage={nextPage} forwardPage={forwardPage} />
-
+                {!filterCat &&
+                    <>
+                        <Button onclick={() => setLimitProduct(limitProduct + 24)} title='Показать еще' />
+                        <Pagination limitProd={limitProduct} skipProd={skipProduct} nextPage={nextPage} forwardPage={forwardPage} />
+                    </>}
 
             </div>
         </>

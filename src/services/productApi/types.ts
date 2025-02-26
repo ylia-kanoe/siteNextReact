@@ -1,3 +1,11 @@
+export type productReviews = {
+    rating: number,
+    comment: string,
+    date: string,
+    reviewerName: string,
+    reviewerEmail: string
+}
+
 export type productData = {
     id: number,
     title: string,
@@ -11,13 +19,9 @@ export type productData = {
     thumbnail: string,
     description: string,
     brand: string,
-    reviews: [
-        rating: number,
-        comment: string,
-        date: string,
-        reviewerName: string,
-        reviewerEmail: string
-    ]
+    reviews: productReviews[],
+    sku: string,
+    availabilityStatus: string
 }
 
 export type productsData = {

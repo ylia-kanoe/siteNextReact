@@ -1,19 +1,26 @@
 'use client'
 
+import { ProductItem } from "@/components/productItem";
+import { setProduct } from "@/lib/features/product/productSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { getApiDataProduct } from "@/services/productApi";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-export function ProductItem() {
+export function Product() {
     const pathname = usePathname()
     const productId = pathname.replace('/products/', '')
 
-    useEffect(() => {
+    const product = useAppSelector(state => state.products.product)
+    const dispatch = useAppDispatch()
 
-    }, [pathname])
+    useEffect(() => {
+        getApiDataProduct(productId).then((data) => dispatch(setProduct(data)));
+    }, [dispatch]);
 
     return (
         <>
-            <p>{productId}</p>
+            <ProductItem {...product} />
         </>
     )
 }

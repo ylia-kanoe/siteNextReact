@@ -3,14 +3,16 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { productData } from "../../../services/productApi/types"
 
 export interface CounterState {
+    category: string[],
+    product: productData,
     products: productData[],
-    productsMore: productData[],
     categoryProducts: productData[]
 }
 
 const initialState: CounterState = {
+    category: [],
+    product: {} as productData,
     products: [],
-    productsMore: [],
     categoryProducts: []
 }
 
@@ -18,27 +20,18 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        setProductsCategory: (state, action: PayloadAction<productData[]>) => {
-            state.categoryProducts = action.payload
-        },
         setProducts: (state, action: PayloadAction<productData[]>) => {
             state.products = action.payload
         },
-        setProductsMore: (state, action: PayloadAction<productData[]>) => {
-            state.productsMore = action.payload
+        setCategorys: (state, action: PayloadAction<string[]>) => {
+            state.category = action.payload
         },
-        sortProductsPrice: (state, action: PayloadAction<'asc' | 'desc'>) => {
-            state.products = state.productsMore.sort((a, b) => action.payload === "desc" ? b.discountPercentage - a.discountPercentage : a.discountPercentage - b.discountPercentage)
-        },
-        sortProductsRating: (state, action: PayloadAction<'asc' | 'desc'>) => {
-            state.products = state.productsMore.sort((a, b) => action.payload === "desc" ? b.rating - a.rating : a.rating - b.rating)
-        },
-        filterProduct: (state, action: PayloadAction<string>) => {
-            state.products = state.productsMore.filter((item) => item.category == action.payload)
+        setProduct: (state, action: PayloadAction<productData>) => {
+            state.product = action.payload
         }
     },
 })
 
-export const { setProductsCategory, setProductsMore, setProducts, sortProductsPrice, sortProductsRating, filterProduct } = productSlice.actions
+export const {  setProducts, setCategorys, setProduct } = productSlice.actions
 
 export default productSlice.reducer

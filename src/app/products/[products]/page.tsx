@@ -1,11 +1,13 @@
-import { ProductItem } from "../[products]";
+import { Product } from "../[products]";
 
 export default function Products() {
 	return (
 		<>
 			<div>
 				<div className="container mx-auto">
-					<ProductItem />
+					<div className="max-w-[1440px] m-auto">
+						<Product />
+					</div>
 				</div>
 			</div>
 		</>
