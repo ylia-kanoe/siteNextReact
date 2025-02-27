@@ -1,9 +1,10 @@
 'use client'
 
 import { ProductItem } from "@/components/productItem";
-import { setCategorys, setProduct } from "@/lib/features/product/productSlice";
+import { ProductRecommended } from "@/components/productRecommended";
+import { setProduct, setProducts } from "@/lib/features/product/productSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getApiCategory, getApiDataProduct } from "@/services/productApi";
+import { getApiDataCategory, getApiDataProduct } from "@/services/productApi";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
@@ -12,16 +13,28 @@ export function Product() {
     const productId = pathname.replace('/products/', '')
 
     const product = useAppSelector(state => state.products.product)
+    const products = useAppSelector(state => state.products.products)
+
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        getApiCategory().then(data => dispatch(setCategorys(data)));
         getApiDataProduct(productId).then((data) => dispatch(setProduct(data)));
     }, [dispatch]);
 
+    useEffect(() => {
+        if (!product) {
+            return
+        }
+        getApiDataCategory(product.category).then(data => { dispatch(setProducts(data.products)) })
+    }, [product, dispatch]);
+
     return (
-        <>
-            <ProductItem {...product} />
+        <>{product &&
+            <>
+                <ProductItem {...product} />
+                <ProductRecommended productsData={products} idProduct={+productId} />
+            </> 
+        }
         </>
     )
 }

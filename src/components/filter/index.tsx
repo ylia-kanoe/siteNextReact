@@ -2,19 +2,29 @@
 
 import { setCategorys } from "@/lib/features/product/productSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { propsFilter } from "./types";
 import { getApiCategory } from "@/services/productApi";
 
 export function Filter(props: propsFilter) {
-    const [category, setCategory] = useState('')
+    const [categoryActive, setCategoryActive] = useState('')
+    const [filterActive, setFilterActive] = useState('')
 
     const categorys = useAppSelector(state => state.products.category)
     const dispatch = useAppDispatch()
 
-    function checkAlert(event: ChangeEvent<{ value: string }>) {
-        setCategory(event.target.value)
-        props.filterCategory(event.target.value)
+    function changeSort(value: string) {
+        setFilterActive('')
+        setCategoryActive(value)
+        props.filterCategory(value)
+    }
+
+    function changeFilter(filterActiveCheck: string, nameSort: string, order: string, category: string) {
+        if (filterActiveCheck === '') {
+            setCategoryActive(filterActiveCheck)
+        }
+        props.sortProduct(nameSort, order, category)
+        setFilterActive(filterActiveCheck)
     }
 
     useEffect(() => {
@@ -22,20 +32,25 @@ export function Filter(props: propsFilter) {
     }, [props.limitProduct, props.skipProduct]);
 
     return (<>
-        <ul>
-            <li onClick={() => props.sortProduct('discountPercentage', 'asc', category)}>По возрастанию цены</li>
-            <li onClick={() => props.sortProduct('discountPercentage', 'desc', category)}>По убыванию цены</li>
-            <li onClick={() => props.sortProduct('rating', 'desc', category)}>По рейтингу</li>
-            <li onClick={() => props.sortProduct('rating', 'desc', category)}>По наименованию</li>
-        </ul>
-
-        <form className="max-w-sm mx-auto">
-            <select value={category} onChange={checkAlert} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value=''>Все категории</option>
-                {categorys.length && categorys.map((item, i) => (
-                    <option value={item} key={i}>{item}</option>
-                ))}
-            </select>
-        </form>
+        <div>
+            <ul className="flex gap-[10px] justify-end my-[20px]">
+                <li className="group relative cursor-pointer border p-[10px]">{!filterActive ? 'По умолчанию' : filterActive}
+                    <ul className="absolute min-w-max bg-white border flex flex-col right-0 top-[45px] hidden group-hover:flex">
+                        <li className="px-[10px] pt-[5px]" onClick={() => changeFilter('', '', '', '')}>По умолчанию</li>
+                        <li className="px-[10px] pt-[5px]" onClick={() => changeFilter('По возрастанию цены', 'discountPercentage', 'asc', categoryActive)}>По возрастанию цены</li>
+                        <li className="px-[10px] pt-[5px]" onClick={() => changeFilter('По убыванию цены', 'discountPercentage', 'desc', categoryActive)}>По убыванию цены</li>
+                        <li className="px-[10px] pt-[5px] pb-[5px]" onClick={() => changeFilter('По рейтингу', 'rating', 'desc', categoryActive)}>По рейтингу</li>
+                    </ul>
+                </li>
+                <li className="group relative cursor-pointer border p-[10px]">{!categoryActive ? 'Все категории' : categoryActive}
+                    <ul className="min-w-max absolute border h-[320px] bg-white flex flex-col flex-wrap right-0 top-[45px] hidden group-hover:flex">
+                        <li className="px-[10px] pt-[5px]" onClick={() => changeSort('')}>Все категории</li>
+                        {categorys.length && categorys.map((item, i) => (
+                            <li className="px-[10px] pt-[5px]" key={i} onClick={() => changeSort(item)}>{item}</li>
+                        ))}
+                    </ul>
+                </li>
+            </ul>
+        </div >
     </>)
 }

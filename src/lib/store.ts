@@ -2,11 +2,11 @@ import { configureStore } from '@reduxjs/toolkit'
 import productSlice from './features/product/productSlice'
 
 export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      products: productSlice
-    },
-  })
+	return configureStore({
+		reducer: {
+			products: productSlice
+		},
+	})
 }
 
 export type AppStore = ReturnType<typeof makeStore>

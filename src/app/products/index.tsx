@@ -46,7 +46,7 @@ export function Product() {
         }
     }
 
-    function sortProduct(nameSort: string, order: string, category: string){
+    function sortProduct(nameSort: string, order: string, category: string) {
         getApiProductsSort(nameSort, order, category).then(data => { dispatch(setProducts(data.products)) })
         setFilterSort(nameSort)
         setFilterOrder(order)
@@ -54,7 +54,7 @@ export function Product() {
 
     return (
         <>
-            <Filter filterCategory={filterCategory} limitProduct={limitProduct} skipProduct={skipProduct} sortProduct={sortProduct}/>
+            <Filter filterCategory={filterCategory} limitProduct={limitProduct} skipProduct={skipProduct} sortProduct={sortProduct} />
             <div className='flex flex-col items-center'>
                 <ProductList productsData={products} />
                 {!filterCat &&

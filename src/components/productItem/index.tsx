@@ -24,8 +24,24 @@ export function ProductItem(props: productData) {
 
     return (
         <>
-            <div className="flex flex-col items-center">
-                <div className="flex justify-between gap-[30px] w-[1100px]">
+            <div className="flex flex-col items-center w-[1200px] m-auto">
+                <div className="mb-[20px] self-start flex flex-col w-[100%]">
+                    <div className="flex justify-between text-xl font-medium">
+                        <div>
+                            <p className="uppercase border-b border-dashed border-red-800 w-max">{props.brand}</p>
+                            {props.title}
+                        </div>
+                        <div onClick={() => like ? setLike(false) : setLike(true)} className={`flex gap-[5px] items-center text-[25px] cursor-pointer hover:text-red-600 ${like ? 'text-red-600' : 'text-zinc-300'}`}>♥ <span className="text-sm">В избранное</span></div>
+                    </div>
+                    <div className="flex items-end">
+                        <div className="text-sm font-bold text-yellow-600">{props.rating}</div>
+                        <div className="flex items-center">
+                            <RaitingStars raiting={props.rating} ratingType="all" />
+                            <div className="text-zinc-500 text-sm ml-[5px]"> • {props.reviews?.length} отзыва</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex gap-[30px] w-[100%]" >
                     <div className="flex gap-[20px] grow">
                         <div className="flex flex-col items-center justify-center">
                             <button onClick={() => setMainImage(mainImage - 1)}
@@ -35,7 +51,7 @@ export function ProductItem(props: productData) {
                                     <path d="m12.841 8.0967-5.3528-5.3528 0.7071-0.7071 6.0599 6.06-6.0599 6.0599-0.7071-0.7071 5.3528-5.3528z"></path>
                                 </svg>
                             </button>
-                            <div className=" h-[315px] overflow-hidden">
+                            <div className=" h-[320px] overflow-hidden">
                                 <div className="flex flex-col gap-[10px] duration-700" style={{ transform: `translateY(-${imageTranslateY}px)` }}>
                                     {props.images && props.images.map((item, i) => (
                                         <Image key={i} className={`max-h-[150px] w-auto cursor-pointer ${mainImage === i && "border rounded-lg border-zinc-950"}`}
@@ -58,12 +74,12 @@ export function ProductItem(props: productData) {
                         </div>
                         {props.images &&
                             <>
-                                <div className="group relative">
+                                <div className="group relative grow">
                                     <button onClick={() => setMainImage(mainImage - 1)}
                                         className={`absolute h-[40px] w-[40px] top-[50%] left-[-10px] border rounded-full bg-white shadow-xl text-red-950 text-2xl invisible 
                                             ${mainImage > 0 && "group-hover:visible"}`}
                                         disabled={mainImage === 0 && true}>⮜</button>
-                                    <Image className="max-h-[500px] w-auto"
+                                    <Image className="m-auto max-h-[500px] w-auto"
                                         src={props.images[mainImage]}
                                         alt={props.title}
                                         width={500}
@@ -77,23 +93,7 @@ export function ProductItem(props: productData) {
                             </>
                         }
                     </div>
-                    <div className="max-w-[450px]">
-                        <div className="mb-[20px]">
-                            <div className="flex justify-between text-xl font-medium">
-                                <div>
-                                    <p className="uppercase border-b border-dashed border-red-800 w-max">{props.brand}</p>
-                                    {props.title}
-                                </div>
-                                <div onClick={() => like ? setLike(false) : setLike(true)} className={`flex gap-[5px] items-center text-[25px] cursor-pointer hover:text-red-600 ${like ? 'text-red-600' : 'text-zinc-300'}`}>♥ <span className="text-sm">В избранное</span></div>
-                            </div>
-                            <div className="flex items-end">
-                                <div className="text-sm font-bold text-yellow-600">{props.rating}</div>
-                                <div className="flex items-center">
-                                    <RaitingStars raiting={props.rating} ratingType="all" />
-                                    <div className="text-zinc-500 text-sm ml-[5px]"> • {props.reviews?.length} отзыва</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="max-w-[450px] flex-none">
                         <div className="text-zinc-600">
                             <p className="mb-[5px] font-bold">О товаре</p>
                             <p className="flex justify-between font-bold">
@@ -103,7 +103,7 @@ export function ProductItem(props: productData) {
                             <p className="flex justify-between font-bold">
                                 <span>Наличие </span>
                                 <span className="grow border-b border-dashed border-zinc-200"></span>
-                                <span className="font-normal"> {props.availabilityStatus === "In Stock" ? `В наличии ${props.stock} шт.` : "Нет в наличии"}</span></p>
+                                <span className="font-normal"> {props.availabilityStatus === "Out of Stock" ? "Нет в наличии" : `${props.stock} шт.`}</span></p>
                             <p className="font-bold">Описание: <span className="font-normal">{props.description}</span></p>
                         </div>
                         <div className="mt-[20px]">
@@ -122,7 +122,7 @@ export function ProductItem(props: productData) {
                         </div>
                     </div>
                 </div>
-                <div className="w-[1100px] mt-[20px] mb-[90px]">
+                <div className="w-[1200px] mt-[40px] mb-[40px]">
                     <p className="grow font-bold text-xl mb-[20px]">Отзывы пользователей</p>
                     <div className="flex flex-wrap gap-[10px]">
                         {props.reviews && props.reviews.map((item, i) => (

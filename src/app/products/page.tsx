@@ -7,7 +7,7 @@ export default function Products() {
 		<>
 			<Header />
 			<div className="container mx-auto">
-				<div className="max-w-[1440px] m-auto">
+				<div className="max-w-[1200px] m-auto">
 					<Product />
 				</div>
 			</div>

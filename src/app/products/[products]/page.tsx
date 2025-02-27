@@ -8,7 +8,7 @@ export default function Products() {
 			<Header />
 			<div>
 				<div className="container mx-auto">
-					<div className="max-w-[1440px] m-auto">
+					<div className="max-w-[1440px] m-auto mt-[30px] mb-[90px]">
 						<Product />
 					</div>
 				</div>

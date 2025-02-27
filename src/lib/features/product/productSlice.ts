@@ -5,15 +5,13 @@ import { productData } from "../../../services/productApi/types"
 export interface CounterState {
     category: string[],
     product: productData,
-    products: productData[],
-    categoryProducts: productData[]
+    products: productData[]
 }
 
 const initialState: CounterState = {
     category: [],
     product: {} as productData,
-    products: [],
-    categoryProducts: []
+    products: []
 }
 
 export const productSlice = createSlice({

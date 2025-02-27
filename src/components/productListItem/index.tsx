@@ -12,7 +12,7 @@ export function ProductListItem(props: productData) {
 
     return (
         <>
-            <li className="group flex flex-col justify-center items-center hover:shadow-2xl py-4 px-8 w-[300px]" key={props.id}>
+            <li className="group flex flex-col justify-center items-center hover:border py-4 px-8 w-[300px] flex-none" key={props.id}>
                 <div onClick={() => like ? setLike(false) : setLike(true)} className={`self-end text-[25px] cursor-pointer hover:text-red-600 ${like ? 'text-red-600' : 'text-zinc-300'}`}>♥</div>
                 <Link href={`/products/${props.id}`}>
                     <Image className="max-h-[180px] w-auto m-auto"
