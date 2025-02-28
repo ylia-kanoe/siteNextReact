@@ -21,11 +21,8 @@ export function Header() {
                         <nav>
                             <ul className="flex gap-[10px] uppercase">
                                 <li><Link href="/">Главная</Link></li>
-                                <li><Link href="/products">Продукты</Link>
-                                    <ul>
-
-                                    </ul>
-                                </li>
+                                <li><Link href="/products">Продукты</Link></li>
+                                <li><Link href="/recipes">Рецепты</Link></li>
                             </ul>
                         </nav>
                     </div>
