@@ -21,7 +21,7 @@ export function Tags(props: { title: string }) {
     return (
         <>
             <div className={`max-h-[130px] overflow-hidden ${tagsVisible && 'max-h-none'}`}>
-                <ul className="flex flex-wrap gap-[10px] justify-between">
+                <ul className="flex flex-wrap gap-[10px] justify-between mx-[20px] lg:mx-[10px]">
                     <li className="cursor-pointer border py-[5px] px-[10px]" onClick={() => selectRecipesTag('')}>Все {props.title}</li>
                     {tags.map((item, i) => (
                         <li className="cursor-pointer border py-[5px] px-[10px]" key={i} onClick={() => selectRecipesTag(item)}>{item}</li>

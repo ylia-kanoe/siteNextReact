@@ -36,7 +36,7 @@ export function ProductListItem(props: productData) {
                                 `${(((props.discountPercentage * 100) / props.price) - 100).toFixed()}% 🡅`}
                         </span>
                     </p>
-                    <div className='text-center mt-[20px] invisible group-hover:visible'>
+                    <div className='text-center mt-[20px] lg:invisible visible group-hover:visible'>
                         <Button title="В корзину" onclick={() => { }} />
                     </div>
                 </Link>

@@ -33,7 +33,7 @@ export function Filter(props: propsFilter) {
 
     return (<>
         <div>
-            <ul className="flex gap-[10px] justify-end my-[20px]">
+            <ul className="flex gap-[10px] justify-end my-[20px] mr-[10px]">
                 <li className="group relative cursor-pointer border p-[10px]">{!filterActive ? 'По умолчанию' : filterActive}
                     <ul className="absolute min-w-max bg-white border flex flex-col right-0 top-[45px] hidden group-hover:flex">
                         <li className="px-[10px] pt-[5px]" onClick={() => changeFilter('', '', '', '')}>По умолчанию</li>
@@ -43,7 +43,7 @@ export function Filter(props: propsFilter) {
                     </ul>
                 </li>
                 <li className="group relative cursor-pointer border p-[10px]">{!categoryActive ? 'Все категории' : categoryActive}
-                    <ul className="min-w-max absolute border h-[320px] bg-white flex flex-col flex-wrap right-0 top-[45px] hidden group-hover:flex">
+                    <ul className="min-w-max absolute border sm:h-[320px] bg-white flex flex-col flex-wrap right-0 top-[45px] hidden group-hover:flex">
                         <li className="px-[10px] pt-[5px]" onClick={() => changeSort('')}>Все категории</li>
                         {categorys.length && categorys.map((item, i) => (
                             <li className="px-[10px] pt-[5px]" key={i} onClick={() => changeSort(item)}>{item}</li>

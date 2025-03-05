@@ -22,7 +22,6 @@ export function Recipe() {
             {recipe &&
                 <>
                 <RecipeItem {...recipe} />
-                    hello {recipeId} and {recipe.name}
                 </>
             }
         </>

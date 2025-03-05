@@ -58,10 +58,10 @@ export function Product() {
             <div className='flex flex-col items-center'>
                 <ProductList productsData={products} />
                 {!filterCat &&
-                    <>
+                    <div className='mt-[20px] text-center'>
                         <Button onclick={() => setLimitProduct(limitProduct + 24)} title='Показать еще' />
                         <Pagination limitProd={limitProduct} skipProd={skipProduct} nextPage={nextPage} forwardPage={forwardPage} />
-                    </>}
+                    </div>}
 
             </div>
         </>

@@ -8,6 +8,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head>
+
+			</head>
 			<StoreProvider>
 				<body className={`font-sans`}>
 					{children}
